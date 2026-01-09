@@ -28,9 +28,9 @@ public class ProductController {
 	@Autowired
 	ProductService prodService;
 	
-	@GetMapping("/getAllproducts")
+	@GetMapping()
 	public ResponseEntity<List<Product>> getProducts(@RequestParam(defaultValue="0") int page,
-			@RequestParam(defaultValue="1")int size)
+			@RequestParam(defaultValue="10")int size)
 	{
 		logger.info("Request Received to fetch all products");
 		Pageable pagable=PageRequest.of(page, size, Sort.by("name").ascending());
@@ -41,7 +41,7 @@ public class ProductController {
 		return ResponseEntity.ok(pageProduct.getContent());
 	}
 	
-	@GetMapping("/getProductById/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<Product> getProductById(@PathVariable long id)
 	{
 		logger.info("Request Received to fetch details for product id:"+id);
@@ -70,12 +70,10 @@ public class ProductController {
 	}
 	
 	@DeleteMapping("/deleteProductById/{id}")
-	public ResponseEntity<String> deleteProduct(@PathVariable long id)
+	public ResponseEntity<String> deleteProduct(@Valid@PathVariable long id)
 	{
 		logger.info("Request Received to delete product id "+id);
-		boolean delete=prodService.deleteProductById(id);
-		if(!delete)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		prodService.deleteProductById(id);
 		return ResponseEntity.ok().body("Product successfully deleted");
 	}
 

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.ecomm.entity.User;
 import com.example.ecomm.service.UserService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/users")
@@ -23,7 +25,7 @@ public class UserController {
 	@Autowired
 	UserService uService;
 	
-	@GetMapping("/getAllUsers")
+	@GetMapping()
 	public ResponseEntity<List<User>> getUsers()
 	{
 		logger.info("Request Received to fetch all users");
@@ -37,7 +39,7 @@ public class UserController {
 	
 	@GetMapping("/getUsersPage")
 	public ResponseEntity<List<User>> getUsersPage(@RequestParam(defaultValue="0") int page,
-			@RequestParam(defaultValue="1") int size)
+			@RequestParam(defaultValue="10") int size)
 	{
 		logger.info("Request Received to fetch all users");
 		Pageable pageable=PageRequest.of(page, size, Sort.by("name").descending());
@@ -49,7 +51,7 @@ public class UserController {
 		return ResponseEntity.ok(userPage.getContent()); // 200
 	}
 	
-	@GetMapping("/getUserById/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<User> getUserById(@PathVariable("id") long id)
 	{
 		logger.info("Request Received to fetch details for user id:"+id);
@@ -58,17 +60,12 @@ public class UserController {
 	}
 	
 	@PostMapping("/addUsers")
-	public ResponseEntity<String> addUsers(@RequestBody User u)
+	public ResponseEntity<User> addUsers(@Valid @RequestBody User u)
 	{
 		logger.info("Request Received to register a new user");
-		try {
-			uService.addUsers(u);
-			return ResponseEntity.ok("User successfully added");
-		}catch(Exception ex)
-		{
-			return ResponseEntity.status(HttpStatus.CONFLICT).body("Duplicate email id");
-		}
-		
+
+			User user=uService.addUsers(u);
+			return ResponseEntity.ok(user);
 	}
 	
 	@DeleteMapping("/deleteUserById/{id}")

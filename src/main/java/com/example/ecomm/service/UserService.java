@@ -35,11 +35,11 @@ public class UserService {
 		return u;
 	}
 	
-	public void addUsers(User u)
+	public User addUsers(User u)
 	{
 		logger.info("Registering new user");
 		try {
-			userRepo.save(u);
+			return userRepo.save(u);
 		}catch(DataIntegrityViolationException ex)
 		{
 			throw new DuplicateRecordException("Duplicate email id");

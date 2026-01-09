@@ -26,12 +26,12 @@ public class OrderController {
 	{
 		logger.info("Recieved request to fetch existing orders list");
 		List<Orders> o=orderService.getAllOrders();
-		if(o==null)
+		if(o.isEmpty())
 			return ResponseEntity.noContent().build();
 		return ResponseEntity.ok(o);
 	}
 	
-	@PostMapping("/createOrder")
+	@PostMapping()
 	public ResponseEntity<Orders> createOrders(@RequestBody Orders o)
 	{
 		logger.info("Recieved request to place new order");

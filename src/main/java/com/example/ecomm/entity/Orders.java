@@ -4,20 +4,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Orders {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long orderid;
+	@NotBlank
 	private long userid;
+	@NotBlank
 	private long productid;
+	@Min(0)
 	private int quantity;
 	private String status;
 	public long getOrderId() {
-		return orderid;
-	}
-	public long getOrderid() {
 		return orderid;
 	}
 	public void setOrderid(long orderid) {

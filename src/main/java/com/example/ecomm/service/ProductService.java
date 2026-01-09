@@ -1,6 +1,7 @@
 package com.example.ecomm.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,7 @@ import com.example.ecomm.repository.ProductRepository;
 
 @Service
 public class ProductService {
-	private static final Logger logger=LoggerFactory.getLogger(OrderController.class);
+	private static final Logger logger=LoggerFactory.getLogger(ProductService.class);
 	@Autowired 
 	ProductRepository prodRepo;
 	
@@ -50,15 +51,13 @@ public class ProductService {
 		return p;
 	}
 	
-	public boolean deleteProductById(long id)
+	public void deleteProductById(long id)
 	{
 		logger.info("Deleting Product for id "+id);
 		if(prodRepo.existsById(id))
-		{
 			prodRepo.deleteById(id);
-			return true;
-		}			
-		return false;
+		else
+			throw new ProductNotFoundException("Product not found for id "+id);
 	}
 
 	@Transactional
@@ -74,7 +73,7 @@ public class ProductService {
 
 	public Product getProductByName(String name) {
 		// TODO Auto-generated method stub
-		return prodRepo.findProdByName(name);
+		return Optional.ofNullable(prodRepo.findProdByName(name)).orElseThrow(()->new ProductNotFoundException("Product Not Found"));
 	}
 
 }
