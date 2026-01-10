@@ -1,24 +1,28 @@
 package com.example.ecomm.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Orders {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long orderid;
-	@NotBlank
-	private long userid;
-	@NotBlank
-	private long productid;
-	@Min(0)
+	@NotNull(message="User id is required")
+	private Long userid;
+	@NotNull(message="Product id is required")
+	private Long productid;
+	@Min(1)
 	private int quantity;
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private OrderStatus status;
 	public long getOrderId() {
 		return orderid;
 	}
@@ -43,10 +47,10 @@ public class Orders {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public String getStatus() {
+	public OrderStatus getStatus() {
 		return status;
 	}
-	public void setStatus(String status) {
+	public void setStatus(OrderStatus status) {
 		this.status = status;
 	}
 	

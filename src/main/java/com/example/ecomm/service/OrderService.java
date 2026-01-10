@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.ecomm.entity.OrderStatus;
 import com.example.ecomm.entity.Orders;
 import com.example.ecomm.repository.OrderRepository;
 
@@ -38,7 +39,7 @@ public class OrderService {
 		logger.info("Placing new order");
 		userService.getUserById(o.getUserid());
 		prodService.checkAndReduceStock(o.getProductid(),o.getQuantity());
-		Orders ord=orderRepo.save(o);
-		return ord;		
+		o.setStatus(OrderStatus.PLACED);
+		return orderRepo.save(o);	
 	}
 }

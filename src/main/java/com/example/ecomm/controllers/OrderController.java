@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.ecomm.entity.Orders;
 import com.example.ecomm.service.OrderService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -32,7 +34,7 @@ public class OrderController {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<Orders> createOrders(@RequestBody Orders o)
+	public ResponseEntity<Orders> createOrders(@Valid@RequestBody Orders o)
 	{
 		logger.info("Recieved request to place new order");
 		Orders ord=orderService.createOrders(o);

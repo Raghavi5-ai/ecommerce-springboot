@@ -14,6 +14,7 @@ import com.example.ecomm.entity.Product;
 import com.example.ecomm.service.ProductService;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -70,11 +71,11 @@ public class ProductController {
 	}
 	
 	@DeleteMapping("/deleteProductById/{id}")
-	public ResponseEntity<String> deleteProduct(@Valid@PathVariable long id)
+	public ResponseEntity<String> deleteProduct(@PathVariable long id)
 	{
 		logger.info("Request Received to delete product id "+id);
 		prodService.deleteProductById(id);
-		return ResponseEntity.ok().body("Product successfully deleted");
+		return ResponseEntity.noContent().build();
 	}
 
 }

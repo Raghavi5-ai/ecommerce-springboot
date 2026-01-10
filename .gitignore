@@ -1,8 +1,29 @@
-/target/
-*.log
-*.class
+# ===== Build files =====
+target/
+build/
+
+# ===== Eclipse / STS =====
+.project
+.classpath
+.settings/
+
+# ===== IntelliJ IDEA =====
 .idea/
-.vscode/
 *.iml
-application.properties
-src/main/resources/application.properties
+
+# ===== VS Code =====
+.vscode/
+
+# ===== OS files =====
+.DS_Store
+Thumbs.db
+
+# ===== Logs =====
+*.log
+logs/
+
+# ===== Environment / Secrets =====
+.env
+application-local.properties
+application-dev.properties
+application-prod.properties
