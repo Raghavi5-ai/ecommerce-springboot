@@ -1,8 +1,0 @@
-/target/
-*.log
-*.class
-.idea/
-.vscode/
-*.iml
-application.properties
-src/main/resources/application.properties
